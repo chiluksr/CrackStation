@@ -1,16 +1,17 @@
 import XCTest
-@testable import CrackStation
+import CrackStation
 
 final class codeTests: XCTestCase {
     func testforCrackStation() throws {
         //load the plain text into Table variable 
-        let Table = try CrackStation.loadDictionaryFromDisk(key: "84a516841ba77a5b4648de2cd0dfcb30ea46dbb4")
+        let x = try CrackStation().decrypt(shaHash: "84a516841ba77a5b4648de2cd0dfcb30ea46dbb4")
         // check if the Table is nil or not
-        if Table == "nil"{
+        if x == nil{
             print("nil")
         }
         else{
-            print(Table)
+            print(x)
         }
+        XCTAssertEqual(x,"c")
     }
 }
