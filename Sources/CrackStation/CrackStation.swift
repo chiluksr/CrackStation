@@ -10,7 +10,7 @@ public class CrackStation: Decrypter{
        let password = try? CrackStation().loadDictionaryFromDisk(key: shaHash)
        return password
     }
-    private func loadDictionaryFromDisk(key: String) throws -> String {
+    private func loadDictionaryFromDisk(key: String) throws -> String? {
         guard let path = Bundle.module.url(forResource: "sha", withExtension: "json") else { return "nil" }
 
         let data = try Data(contentsOf: path)
@@ -20,14 +20,14 @@ public class CrackStation: Decrypter{
         if let lookupTable: Dictionary = jsonResult as? Dictionary<String, String> {
             let ans = lookupTable[key]
             if ans == nil{
-                 return "nil"
+                 return nil
             }
             else{
                return ans!
             }
         }
         else{
-            return ""
+            return nil
         }
     }
 }
