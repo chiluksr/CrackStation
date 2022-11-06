@@ -1,5 +1,4 @@
 import Foundation
-import Glibc
 import XCTest
 
 public class CrackStation: Decrypter{
