@@ -1,32 +1,31 @@
+//importing the required libraries
 import Foundation
-import XCTest
 
+// Implementing the Decrypter protocol to swift
 public class CrackStation: Decrypter{
-    var lookupTable: [String: String]=[:]
-    required public init(){        
-    }
-    public func decrypt(shaHash:String)->String?{
-       let password = try? CrackStation().loadDictionaryFromDisk(key: shaHash)
-       return password
-    }
-    private func loadDictionaryFromDisk(key: String) throws -> String? {
-        guard let path = Bundle.module.url(forResource: "sha", withExtension: "json") else { return "nil" }
+    // declaring a swift library to load the json data into it
+    private var dict = Dictionary<String,String>()
 
-        let data = try Data(contentsOf: path)
-        let jsonResult = try JSONSerialization.jsonObject(with: data)
-        
-
-        if let lookupTable: Dictionary = jsonResult as? Dictionary<String, String> {
-            let ans = lookupTable[key]
-            if ans == nil{
-                 return nil
-            }
-            else{
-               return ans!
-            }
+    required public init(){
+        do{
+            dict = try loadDictionaryFromDisk()
         }
-        else{
-            return nil
+        catch{
+            dict = ["":""]
         }
     }
+
+    public func decrypt(shaHash:String) -> String?{
+        let value = dict[shaHash]
+        return value       
+    }
+
+    private func loadDictionaryFromDisk() throws -> Dictionary<String,String>{
+        guard let filepath = Bundle.module.url(forResource: "data", withExtension: "json") else {return ["":""]} 
+        guard let json_data = try? Data(contentsOf: filepath) else {return ["":""]}
+        let jsonResult = try? JSONSerialization.jsonObject(with: json_data)
+        guard let table = jsonResult as? Dictionary<String, String> else { return ["":""]}
+        return table
+    }
+
 }

@@ -2,7 +2,7 @@ services:
   dev:
     image: "swiftlang/swift:nightly-focal"
     volumes:
-      - C:\Users\Srivally\CS561\CrackStation:/code
+      - C:\Users\Srivally\CS561\week9\CrackStation:/code
     environment:
       - USER=Srivally
       

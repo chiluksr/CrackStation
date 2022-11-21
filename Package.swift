@@ -21,9 +21,9 @@ let package = Package(
         .target(
             name: "CrackStation",
             dependencies: [],
-            resources: [.process("sha.json")]),
+            resources: [.process("data.json")]),
         .testTarget(
-            name: "CrackStationTests",
+            name: "codeTests",
             dependencies: ["CrackStation"]),
     ]
 )
